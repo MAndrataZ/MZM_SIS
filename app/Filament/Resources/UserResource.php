@@ -46,6 +46,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('index')->label('No')->rowIndex(),
                 TextColumn::make('id_pengguna'),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
@@ -58,9 +59,9 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

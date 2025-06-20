@@ -99,10 +99,12 @@ class BelanjaResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('index')->label('No')->rowIndex(),
                 TextColumn::make('id_barang')
                     ->label('ID Barang'),
                 TextColumn::make('nama_barang')
-                    ->label('Nama Barang'),
+                    ->label('Nama Barang')
+                    ->searchable(),
                 TextColumn::make('jumlah'),
                 TextColumn::make('barang.satuan')
                     ->label('Satuan'),
@@ -117,15 +119,26 @@ class BelanjaResource extends Resource
                     ->label('Tanggal Beli'),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('Rentang Tanggal')
+                    ->form([
+                        Forms\Components\DatePicker::make('from')
+                            ->label('Tanggal Awal'),
+                        Forms\Components\DatePicker::make('until')
+                            ->label('Tanggal Akhir'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when($data['from'], fn ($q) => $q->whereDate('tanggal_beli', '>=', $data['from']))
+                            ->when($data['until'], fn ($q) => $q->whereDate('tanggal_beli', '<=', $data['until']));
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

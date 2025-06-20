@@ -42,6 +42,7 @@ class ProduksiResource extends Resource
                     ->label('SKU')
                     ->options(Produk::all()->pluck('SKU', 'SKU'))
                     ->reactive()
+                    ->native(false)
                     ->debounce(1000)
                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                         $produk = Produk::find($state);
@@ -62,6 +63,7 @@ class ProduksiResource extends Resource
                     ->label('Nama Produk')
                     ->options(Produk::all()->pluck('nama_produk', 'nama_produk'))
                     ->reactive()
+                    ->native(false)
                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                         $produk = Produk::where('nama_produk', $state)->first();
                         if ($produk) {
@@ -109,8 +111,11 @@ class ProduksiResource extends Resource
         return $table
             ->query(Produk::query()) // Menampilkan produk, bukan produksi
             ->columns([
+                TextColumn::make('index')->label('No')->rowIndex(),
                 Tables\Columns\TextColumn::make('SKU')->label('SKU'),
-                Tables\Columns\TextColumn::make('nama_produk')->label('Nama Produk'),
+                Tables\Columns\TextColumn::make('nama_produk')
+                    ->label('Nama Produk')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('stok')->label('Stok Saat Ini'),
             ])
             ->filters([
@@ -131,9 +136,9 @@ class ProduksiResource extends Resource
                     }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
