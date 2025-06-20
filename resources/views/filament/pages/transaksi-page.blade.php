@@ -7,19 +7,19 @@
     <form wire:submit.prevent="addToList" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700">SKU</label>
+                <label class="block text-sm font-medium text-gray-700">Produk</label>
                 <select wire:model="form.SKU" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                    <option value="">-- Pilih SKU --</option>
+                    <option value="">-- Pilih Produk --</option>
                     @foreach(\App\Models\Produk::all() as $produk)
                         <option value="{{ $produk->SKU }}">{{ $produk->SKU }} - {{ $produk->nama_produk }}</option>
                     @endforeach
                 </select>
             </div>
 
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-700">Nama Produk</label>
                 <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100" wire:model="form.nama_produk" disabled />
-            </div>
+            </div> --}}
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Dijual Ke</label>
@@ -46,13 +46,16 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                <input type="number" wire:model.debounce.300ms="form.jumlah" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+               <input type="number"
+                wire:model.debounce.300ms="form.jumlah"
+                placeholder="berapa banyak produk dijual"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
             </div>
 
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-700">Total</label>
                 <input type="text" wire:model="form.total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100" disabled />
-            </div>
+            </div> --}}
         </div>
 
         <div class="mt-4">
