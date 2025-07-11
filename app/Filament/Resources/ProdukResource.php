@@ -89,10 +89,12 @@ class ProdukResource extends Resource
                     ->label('Nama Produk'),
                 TextColumn::make('harga_retail')
                     ->label('Harga Retail')
-                    ->formatStateUsing(fn (Produk $record): string => 'Rp ' . number_format($record->harga_retail, 0, '.', '.')),
+                    ->money('IDR'),
+                    // ->formatStateUsing(fn (Produk $record): string => 'Rp ' . number_format($record->harga_retail, 0, '.', '.')),
                 TextColumn::make('harga_reseller')
                     ->label('Harga Reseller')
-                    ->formatStateUsing(fn (Produk $record): string => 'Rp ' . number_format($record->harga_reseller, 0, '.', '.')),
+                    ->money('IDR'),
+                    // ->formatStateUsing(fn (Produk $record): string => 'Rp ' . number_format($record->harga_reseller, 0, '.', '.')),
             ])
             ->filters([
                 //

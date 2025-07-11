@@ -47,13 +47,13 @@ class LaporanTransaksi extends Page implements Tables\Contracts\HasTable
                 Tables\Columns\TextColumn::make('tanggal_transaksi')->dateTime()->date('d-m-Y'),
                 Tables\Columns\TextColumn::make('produk_terjual'),
                 Tables\Columns\TextColumn::make('total_pendapatan')->money('IDR'),
-                Tables\Columns\TextColumn::make('id_pengguna'),
+                // Tables\Columns\TextColumn::make('id_pengguna'),
             ])
             ->actions([
                 Action::make('View')
-                    ->label('Lihat Detail')
-                    ->url(fn (Transaksi $record) => route('filament.pages.laporan-transaksi-detail', ['id' => $record->id_transaksi]))
-                 ,
+                    ->label('Lihat')
+                    ->icon('heroicon-m-eye')
+                    ->url(fn (Transaksi $record) => route('filament.admin.pages.detail-transaksi', ['id' => $record->id_transaksi])),
             ]);
     }
 

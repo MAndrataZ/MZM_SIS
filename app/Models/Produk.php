@@ -15,6 +15,7 @@ class Produk extends Model
     public function produksi() {
         return $this->hasMany(Produksi::class, 'SKU');
     }
+    
 
     // public function transaksi() {
     //     return $this->hasMany(Transaksi::class, 'SKU');

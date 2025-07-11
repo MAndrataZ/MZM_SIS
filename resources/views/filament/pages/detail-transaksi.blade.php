@@ -2,8 +2,20 @@
 
     <x-filament::section>
         <x-slot name="heading">
-            Detail Transaksi: {{ $transaksi->id_transaksi }}
+            <div class="flex justify-between items-center">
+                <div>
+                    Detail Transaksi: {{ $transaksi->id_transaksi }}
+                </div>
+                <div>
+                  <a href="{{ url()->previous() }}"
+                    class="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded">
+                    Kembali
+                  </a>
+                </div>            
+            </div>
         </x-slot>
+
+        
 
 
         @foreach ($transaksi->detailTransaksi ?? [] as $detail)

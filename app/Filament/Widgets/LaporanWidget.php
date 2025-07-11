@@ -35,7 +35,7 @@ class LaporanWidget extends BaseWidget
             TextColumn::make('tanggal_transaksi')->label('Tanggal')->date('d-m-Y'),
             TextColumn::make('produk_terjual')->label('Produk Terjual'),
             TextColumn::make('total_pendapatan')->label('Total Pendapatan')->money('IDR'),
-            TextColumn::make('id_pengguna')->label('ID Pengguna'),
+            // TextColumn::make('id_pengguna')->label('ID Pengguna'),
         ];
     }
 }

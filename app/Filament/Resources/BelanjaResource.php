@@ -108,9 +108,11 @@ class BelanjaResource extends Resource
                     ->label('Satuan'),
                 TextColumn::make('harga_satuan')
                     ->label('Harga Satuan')
-                    ->formatStateUsing(fn (Belanja $record): string => 'Rp ' . number_format($record->harga_satuan, 0, '.', '.')),
+                    ->money('IDR'),
+                    // ->formatStateUsing(fn (Belanja $record): string => 'Rp ' . number_format($record->harga_satuan, 0, '.', '.')),
                 TextColumn::make('total')
-                    ->formatStateUsing(fn (Belanja $record): string => 'Rp ' . number_format($record->total, 0, '.', '.')),
+                    ->money('IDR'),
+                    // ->formatStateUsing(fn (Belanja $record): string => 'Rp ' . number_format($record->total, 0, '.', '.')),
                 TextColumn::make('tanggal_beli')
                     ->date('d-m-Y')
                     ->sortable()
