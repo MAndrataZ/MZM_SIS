@@ -99,10 +99,12 @@ class BelanjaResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('index')->label('No')->rowIndex(),
                 TextColumn::make('id_barang')
                     ->label('ID Barang'),
                 TextColumn::make('nama_barang')
-                    ->label('Nama Barang'),
+                    ->label('Nama Barang')
+                    ->searchable(),
                 TextColumn::make('jumlah'),
                 TextColumn::make('barang.satuan')
                     ->label('Satuan'),
@@ -111,7 +113,8 @@ class BelanjaResource extends Resource
                     ->money('IDR'),
                     // ->formatStateUsing(fn (Belanja $record): string => 'Rp ' . number_format($record->harga_satuan, 0, '.', '.')),
                 TextColumn::make('total')
-                    ->money('IDR'),
+                    ->money('IDR')
+                    ->sortable(),
                     // ->formatStateUsing(fn (Belanja $record): string => 'Rp ' . number_format($record->total, 0, '.', '.')),
                 TextColumn::make('tanggal_beli')
                     ->date('d-m-Y')
@@ -125,9 +128,9 @@ class BelanjaResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

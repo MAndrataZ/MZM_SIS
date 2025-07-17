@@ -109,9 +109,16 @@ class ProduksiResource extends Resource
         return $table
             ->query(Produk::query()) // Menampilkan produk, bukan produksi
             ->columns([
-                Tables\Columns\TextColumn::make('SKU')->label('SKU'),
-                Tables\Columns\TextColumn::make('nama_produk')->label('Nama Produk'),
-                Tables\Columns\TextColumn::make('stok')->label('Stok Saat Ini'),
+                TextColumn::make('index')->label('No')->rowIndex(),
+                Tables\Columns\TextColumn::make('SKU')->
+                label('SKU')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('nama_produk')
+                ->label('Nama Produk')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('stok')
+                ->label('Stok Saat Ini')
+                ->sortable(),
             ])
             ->filters([
                 //
@@ -131,9 +138,9 @@ class ProduksiResource extends Resource
                     }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

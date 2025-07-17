@@ -74,7 +74,19 @@ class TransaksiPage extends Page
     public function addToList()
     {
         if (!$this->form['SKU'] || !$this->form['dijual_ke'] || $this->form['jumlah'] <= 0) {
-            $this->dispatch('notify', type: 'danger', message: 'Lengkapi semua data sebelum menambahkan.');
+            $this->dispatch('notify', type: 'danger', message: 'Pilih produk, jenis penjualan, dan isi jumlah terlebih dahulu.');
+            return;
+        }
+
+        $produk = Produk::find($this->form['SKU']);
+
+        if (!$produk) {
+            $this->dispatch('notify', type: 'danger', message: 'Produk tidak ditemukan.');
+            return;
+        }
+
+        if ($this->form['jumlah'] > $produk->stok) {
+            $this->dispatch('notify', type: 'danger', message: 'Jumlah melebihi stok tersedia.');
             return;
         }
 
@@ -88,7 +100,10 @@ class TransaksiPage extends Page
             'jumlah' => 0,
             'total' => 0,
         ];
+
+        $this->dispatch('notify', type: 'success', message: 'Produk berhasil ditambahkan ke list.');
     }
+
 
     public function removeFromList($index)
     {

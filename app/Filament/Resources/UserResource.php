@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -46,6 +47,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('index')->label('No')->rowIndex(),
                 TextColumn::make('id_pengguna'),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
@@ -58,9 +60,9 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -79,4 +81,10 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::check() && Auth::user()->peran === 'admin';
+    }
+
 }

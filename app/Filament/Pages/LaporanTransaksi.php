@@ -41,8 +41,9 @@ class LaporanTransaksi extends Page implements Tables\Contracts\HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query($this->getTableQuery()) // ⬅️ tambahkan baris ini
+            ->query($this->getTableQuery())
             ->columns([
+                Tables\Columns\TextColumn::make('index')->label('No')->rowIndex(),
                 Tables\Columns\TextColumn::make('id_transaksi')->label('ID'),
                 Tables\Columns\TextColumn::make('tanggal_transaksi')->dateTime()->date('d-m-Y'),
                 Tables\Columns\TextColumn::make('produk_terjual'),

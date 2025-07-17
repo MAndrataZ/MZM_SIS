@@ -7,7 +7,7 @@
     <form wire:submit.prevent="addToList" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700">SKU</label>
+                <label class="block text-sm font-medium text-gray-700">Produk</label>
                 <select wire:model="form.SKU" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                     <option value="">-- Pilih SKU --</option>
                     @foreach(\App\Models\Produk::all() as $produk)
@@ -16,10 +16,10 @@
                 </select>
             </div>
 
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-700">Nama Produk</label>
                 <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100" wire:model="form.nama_produk" disabled />
-            </div>
+            </div> --}}
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Dijual Ke</label>
@@ -46,13 +46,22 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                <input type="number" wire:model.debounce.300ms="form.jumlah" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                <input
+                    type="number"
+                    wire:model.debounce.300ms="form.jumlah"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm {{ $form['harga_satuan'] == 0 ? 'bg-gray-100 cursor-not-allowed' : '' }}"
+                    {{ $form['harga_satuan'] == 0 ? 'disabled' : '' }}
+                />
+                
+                @if ($form['harga_satuan'] == 0)
+                    <p class="text-xs text-red-500 mt-1">Pilih produk dan jenis penjualan terlebih dahulu.</p>
+                @endif
             </div>
 
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-700">Total</label>
                 <input type="text" wire:model="form.total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100" disabled />
-            </div>
+            </div> --}}
         </div>
 
         <div class="mt-4">
@@ -65,29 +74,30 @@
     <hr class="my-6" />
 
     <h3 class="text-lg font-semibold mb-2">Detail Transaksi</h3>
-    <table class="table-auto w-full border border-gray-200">
+    <table class="table-auto w-full">
         <thead class="bg-gray-100">
             <tr>
-                <th class="px-2 py-1 border">SKU</th>
-                <th class="px-2 py-1 border">Nama Produk</th>
-                <th class="px-2 py-1 border">Jumlah</th>
-                <th class="px-2 py-1 border">Harga Satuan</th>
-                <th class="px-2 py-1 border">Total</th>
-                <th class="px-2 py-1 border">Aksi</th>
+                <th class="px-2 py-1">SKU</th>
+                <th class="px-2 py-1">Nama Produk</th>
+                <th class="px-2 py-1">Jumlah</th>
+                <th class="px-2 py-1">Harga Satuan</th>
+                <th class="px-2 py-1">Total</th>
+                <th class="px-2 py-1">Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach($list as $index => $item)
                 <tr class="text-center">
-                    <td class="px-2 py-1 border">{{ $item['SKU'] }}</td>
-                    <td class="px-2 py-1 border">{{ $item['nama_produk'] }}</td>
-                    <td class="px-2 py-1 border">{{ $item['jumlah'] }}</td>
-                    <td class="px-2 py-1 border">Rp {{ number_format($item['harga_satuan'], 0, ',', '.') }}</td>
-                    <td class="px-2 py-1 border">Rp {{ number_format($item['total'], 0, ',', '.') }}</td>
-                    <td class="px-2 py-1 border">
-                        <button type="button" wire:click="removeFromList({{ $index }})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+                    <td class="px-2 py-1">{{ $item['SKU'] }}</td>
+                    <td class="px-2 py-1">{{ $item['nama_produk'] }}</td>
+                    <td class="px-2 py-1">{{ $item['jumlah'] }}</td>
+                    <td class="px-2 py-1">Rp {{ number_format($item['harga_satuan'], 0, ',', '.') }}</td>
+                    <td class="px-2 py-1">Rp {{ number_format($item['total'], 0, ',', '.') }}</td>
+                    <td class="px-2 py-1">
+                        <button type="button" wire:click="removeFromList({{ $index }})" class="text-red-600 border border-red-600 hover:bg-red-50 px-3 py-1 rounded">
                             Hapus
                         </button>
+
                     </td>
                 </tr>
             @endforeach

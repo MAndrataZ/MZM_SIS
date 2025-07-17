@@ -70,7 +70,8 @@ class BarangResource extends Resource
                 TextColumn::make('id_barang')
                     ->label('ID Barang'),
                 TextColumn::make('nama_barang')
-                    ->label('Nama Barang'),
+                    ->label('Nama Barang')
+                    -> searchable(),
                 TextColumn::make('satuan'),
             ])
             ->filters([

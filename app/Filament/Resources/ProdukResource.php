@@ -83,10 +83,13 @@ class ProdukResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('index')->label('No')->rowIndex(),
                 TextColumn::make('SKU')
-                    ->label('SKU'),
+                    ->label('SKU')
+                    ->searchable(),
                 TextColumn::make('nama_produk')
-                    ->label('Nama Produk'),
+                    ->label('Nama Produk')
+                    ->searchable(),
                 TextColumn::make('harga_retail')
                     ->label('Harga Retail')
                     ->money('IDR'),
@@ -104,9 +107,9 @@ class ProdukResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
