@@ -15,24 +15,36 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        // Membuat user Admin
-        User::create([
-            'id_pengguna' => 'ADM001', // Kolom kustom Anda
-            'name' => 'Administrator',
-            'email' => 'admin@gmail.com',
-            'peran' => 'admin', // Kolom kustom Anda
+        // Membuat user superadmin
+         User::create([
+            'id_pengguna' => 'SADM999', 
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'peran' => 'superadmin', 
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Password default, jangan lupa di-hash!
-            'foto_profil' => null, // Kolom kustom Anda, bisa diisi null atau path gambar
+            'password' => Hash::make('MZMsuperadmin1'), 
+            'foto_profil' => null, 
             'remember_token' => \Illuminate\Support\Str::random(10),
         ]);
 
-        // Membuat user Staff (sebagai contoh kedua)
+        // Membuat user Admin
         User::create([
-            'id_pengguna' => 'STF001',
-            'name' => 'Staff Gudang',
-            'email' => 'staff@gmail.com',
-            'peran' => 'staff',
+            'id_pengguna' => 'ADM999', 
+            'name' => 'Administrator',
+            'email' => 'admin@gmail.com',
+            'peran' => 'admin', 
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'), 
+            'foto_profil' => null, 
+            'remember_token' => \Illuminate\Support\Str::random(10),
+        ]);
+
+        // Membuat user pegawai
+        User::create([
+            'id_pengguna' => 'PGW999',
+            'name' => 'Pegawai',
+            'email' => 'pegawai@gmail.com',
+            'peran' => 'pegawai',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'foto_profil' => null,

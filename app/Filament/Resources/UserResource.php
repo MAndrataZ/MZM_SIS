@@ -84,7 +84,7 @@ class UserResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return Auth::check() && Auth::user()->peran === 'admin';
+        return Auth::check() && in_array(Auth::user()->peran, ['admin', 'superadmin']);
     }
 
 }

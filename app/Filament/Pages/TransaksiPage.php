@@ -74,24 +74,35 @@ class TransaksiPage extends Page
     public function addToList()
     {
         if (!$this->form['SKU'] || !$this->form['dijual_ke'] || $this->form['jumlah'] <= 0) {
-            $this->dispatch('notify', type: 'danger', message: 'Pilih produk, jenis penjualan, dan isi jumlah terlebih dahulu.');
+            session()->flash('flash', [
+                'message' => 'Pilih produk, jenis penjualan, dan isi jumlah terlebih dahulu.',
+                'type' => 'danger',
+            ]);
             return;
         }
 
         $produk = Produk::find($this->form['SKU']);
 
         if (!$produk) {
-            $this->dispatch('notify', type: 'danger', message: 'Produk tidak ditemukan.');
+            session()->flash('flash', [
+                'message' => 'Produk tidak ditemukan.',
+                'type' => 'danger',
+            ]);
             return;
         }
 
         if ($this->form['jumlah'] > $produk->stok) {
-            $this->dispatch('notify', type: 'danger', message: 'Jumlah melebihi stok tersedia.');
+            session()->flash('flash', [
+                'message' => 'Jumlah melebihi stok tersedia.',
+                'type' => 'danger',
+            ]);
             return;
         }
 
+        // Menambahkan produk ke list
         $this->list[] = $this->form;
 
+        // Reset form
         $this->form = [
             'SKU' => '',
             'nama_produk' => '',
@@ -101,8 +112,13 @@ class TransaksiPage extends Page
             'total' => 0,
         ];
 
-        $this->dispatch('notify', type: 'success', message: 'Produk berhasil ditambahkan ke list.');
+        session()->flash('flash', [
+            'message' => 'Produk berhasil ditambahkan ke list.',
+            'type' => 'success',
+        ]);
     }
+
+
 
 
     public function removeFromList($index)
@@ -114,12 +130,18 @@ class TransaksiPage extends Page
     public function prosesTransaksi()
     {
         if (empty($this->list)) {
-            $this->dispatch('notify', type: 'danger', message: 'Tidak ada data untuk diproses.');
+            session()->flash('flash', [
+                'message' => 'Tidak ada data untuk diproses.',
+                'type' => 'danger',
+            ]);
             return;
         }
 
         if (!$this->tanggal_transaksi) {
-            $this->dispatch('notify', type: 'danger', message: 'Tanggal transaksi harus diisi.');
+            session()->flash('flash', [
+                'message' => 'Tanggal transaksi harus diisi.',
+                'type' => 'danger',
+            ]);
             return;
         }
 
@@ -157,6 +179,12 @@ class TransaksiPage extends Page
         ];
         $this->tanggal_transaksi = null;
 
-        $this->dispatch('notify', type: 'success', message: 'Transaksi berhasil diproses dan stok diperbarui.');
+       session()->flash('notifikasi', [
+            'type' => 'success',
+            'message' => 'Transaksi berhasil diproses!',
+        ]);
+
+
     }
+
 }

@@ -1,4 +1,43 @@
 <x-filament::page>
+    @if (session()->has('notifikasi'))
+        @php $notif = session('notifikasi'); @endphp
+        <div
+            key="{{ md5($notif['message']) . now()->timestamp }}"
+            x-data="{ show: true }"
+            x-show="show"
+            class="fixed top-5 right-5 bg-white text-gray-800 shadow-xl rounded-xl border-l-4
+                {{ $notif['type'] === 'success' ? 'border-green-500' : 'border-red-500' }}
+                p-4 z-[9999] w-full max-w-xs transition-all"
+        >
+            <div class="flex items-start justify-between">
+                <div class="text-sm font-medium">
+                    {{ $notif['message'] }}
+                </div>
+                <button @click="show = false" class="ml-3 text-gray-500 hover:text-gray-700">
+                    ✕
+                </button>
+            </div>
+        </div>
+    @endif
+
+
+    @if (session()->has('flash'))
+        @php $flash = session('flash'); @endphp
+        <div
+            key="{{ md5($flash['message']) . now()->timestamp }}"
+            x-data="{ show: true }"
+            x-show="show"
+            class="mb-4 px-4 py-3 rounded border-l-4
+                {{ $flash['type'] === 'success' ? 'bg-green-100 border-green-500 text-green-800' : 'bg-red-100 border-red-500 text-red-800' }}">
+            <div class="flex justify-between">
+                <div>{{ $flash['message'] }}</div>
+                <button @click="show = false" class="text-sm">✕</button>
+            </div>
+        </div>
+    @endif
+
+
+
     <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
         <input type="date" wire:model="tanggal_transaksi" class="mt-1 block w-full max-w-xs rounded-md border-gray-300 shadow-sm" />
